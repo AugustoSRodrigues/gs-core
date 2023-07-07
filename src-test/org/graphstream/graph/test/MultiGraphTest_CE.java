@@ -8,15 +8,13 @@ import org.graphstream.graph.ElementNotFoundException;
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.IdAlreadyInUseException;
 import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.graph.implementations.MultiGraph;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
-
-public class SingleGraphTest_CE {
+public class MultiGraphTest_CE {
 	
-	public Graph grafo = new SingleGraph("Teste");
+public Graph grafo = new MultiGraph("Teste");
 	
 	@After
 	public void limpa_grafo() {
@@ -160,23 +158,24 @@ public class SingleGraphTest_CE {
 		
 	}
 	
-	@Test(expected=EdgeRejectedException.class)
+	@Test//(expected=EdgeRejectedException.class)
 	public void addege_test_I5() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
 		grafo.addEdge("AB", A, B);
 		grafo.addEdge("_AB", A, B);
+		assertEquals(2,grafo.getEdgeCount());
 	}
 	
-	@Test(expected=EdgeRejectedException.class)
+	@Test//(expected=EdgeRejectedException.class)
 	public void addege_test_I6() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
 		grafo.addEdge("AB", A, B);
 		grafo.addEdge("_AB", B, A);
-		
+		assertEquals(2,grafo.getEdgeCount());
 	}
 	
 	@Test
@@ -221,23 +220,25 @@ public class SingleGraphTest_CE {
 		grafo.addEdge("AB", "A", "B");
 	}
 	
-	@Test(expected=EdgeRejectedException.class)
+	@Test//(expected=EdgeRejectedException.class)
 	public void addege_test_I8() {
 		
 		grafo.addNode("A");
 		grafo.addNode("B");
 		grafo.addEdge("AB", "A", "B");
 		grafo.addEdge("_AB", "A", "B");
+		assertEquals(2,grafo.getEdgeCount());
 		
 	}
 	
-	@Test(expected=EdgeRejectedException.class)
+	@Test//(expected=EdgeRejectedException.class)
 	public void addege_test_I9() {
 		
 		grafo.addNode("A");
 		grafo.addNode("B");
 		grafo.addEdge("AB", "A", "B");
 		grafo.addEdge("_AB", "B", "A");
+		assertEquals(2,grafo.getEdgeCount());
 		
 		
 	}
@@ -644,17 +645,5 @@ public class SingleGraphTest_CE {
 		
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-	
-	
-	
+
 }
