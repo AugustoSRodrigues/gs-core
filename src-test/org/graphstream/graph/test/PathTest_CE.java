@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class PathTest_CE {
 	
-	public Graph grafo = new DefaultGraph("Teste");
+	public Graph grafo = new DefaultGraph("Teste"); 
 	public Path path = new Path();
 	
 	@Before 

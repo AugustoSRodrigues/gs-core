@@ -84,7 +84,7 @@ public class TestGraph {
 		C1.setAttribute("array", new int[] { 1, 2, 3 });
 
 		AB1.setAttribute("string", "an example");
-		BC1.setAttribute("double", 42.0);
+		BC1.setAttribute("double", 42.0); 
 		CA1.setAttribute("array", new int[] { 1, 2, 3 });
 
 		Replayable.Controller controller = g1.getReplayController();

@@ -604,7 +604,7 @@ public abstract class AbstractGraph extends AbstractElement implements Graph, Re
 			if (strictChecking)
 				throw new EdgeRejectedException("Edge " + edge + " was rejected by node " + src);
 			return null;
-		}
+		} 
 		// note that for loop edges the callback is called only once
 		if (src != dst && !dst.addEdgeCallback(edge)) {
 			// the edge is accepted by src but rejected by dst
