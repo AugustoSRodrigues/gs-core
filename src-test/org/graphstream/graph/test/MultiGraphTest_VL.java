@@ -3,24 +3,24 @@ package org.graphstream.graph.test;
 import static org.junit.Assert.*;
 
 import org.graphstream.graph.Edge;
-import org.graphstream.graph.EdgeRejectedException;
 import org.graphstream.graph.ElementNotFoundException;
 import org.graphstream.graph.Graph;
-import org.graphstream.graph.IdAlreadyInUseException;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.MultiGraph;
 import org.junit.After;
 import org.junit.Test;
 
-public class MultiGraphTest_CE {
+public class MultiGraphTest_VL {
+
+public  Graph grafo = new MultiGraph("Teste");
 	
-public Graph grafo = new MultiGraph("Teste");
+	
 	
 	@After
 	public void limpa_grafo() {
 		grafo.clear();
 	}
-
+	
 	@Test
 	public void addnode_test_V1() {
 		
@@ -30,216 +30,172 @@ public Graph grafo = new MultiGraph("Teste");
 		assertEquals(grafo.getNode("A"),A);
 	}
 	
-	@Test(expected =  IdAlreadyInUseException.class)
+	@Test(expected =  AssertionError	.class)
 	public void addnode_test_I1() {
 		
 		
-		grafo.addNode("A");
-		grafo.addNode("A");
+		grafo.addNode(null);
 		
-		
-	}
+}
+	
 	
 	@Test
 	public void addedge_test_V1() {
-		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
-		
-		Edge AB = grafo.addEdge("AB", A.getIndex(), B.getIndex());
-		
-		assertEquals(AB,grafo.getEdge("AB"));
-	}
-	
-	@Test 
-	public void addedge_test_V2() {
-		
-		Node A = grafo.addNode("A");
-		Node B = grafo.addNode("B");
-		
 		Edge AB = grafo.addEdge("AB", A.getIndex(), B.getIndex());
 		
 		assertEquals(AB,grafo.getEdge("AB"));
 	}
 	
 	@Test
-	public void addedge_test_V3() {
-		
+	public void addedge_test_V2() {
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
-		
 		Edge AB = grafo.addEdge("AB", A.getIndex(), B.getIndex());
 		
 		assertEquals(AB,grafo.getEdge("AB"));
 	}
 	
-	@Test(expected =  IdAlreadyInUseException.class)
+	@Test(expected =  IndexOutOfBoundsException.class)
 	public void addedge_test_I1() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
 		
-		grafo.addEdge("AB", A.getIndex(), B.getIndex());
-		grafo.addEdge("AB", A.getIndex(), B.getIndex());
+		
+		grafo.addEdge("AB", -1, B.getIndex());
 		
 	}
 	
 	@Test(expected =  IndexOutOfBoundsException.class)
 	public void addedge_test_I2() {
 		
-		
+		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
-		
-		grafo.addEdge("AB", -10, B.getIndex());
+		assertEquals(2,grafo.getNodeCount());
+		int max = grafo.getNodeCount()+1;
+		grafo.addEdge("AB", max, B.getIndex());
 		
 	}
 	
 	@Test(expected =  IndexOutOfBoundsException.class)
 	public void addedge_test_I3() {
 		
-		
-		Node A = grafo.addNode("A");
-		
-		grafo.addEdge("AB", A.getIndex(), -10);
-		
-	}
-	
-	@Test
-	public void addedge_test_V4() {
-		
-		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
 		
 		
-		Edge AB = grafo.addEdge("AB", A, B);
-		assertEquals(AB,grafo.getEdge("AB"));
-		
-		
+		grafo.addEdge("AB", A.getIndex(), -1);
 		
 	}
 	
-	@Test 
-	public void addedge_test_V5() {
-		
-		
-		Node A = grafo.addNode("A");
-		Node B = grafo.addNode("B");
-		
-		
-		Edge AB = grafo.addEdge("AB", A, B);
-		assertEquals(AB,grafo.getEdge("AB"));
-		
-		
-	}
-	
-	@Test 
-	public void addedge_test_V6() {
-		
-		
-		Node A = grafo.addNode("A");
-		Node B = grafo.addNode("B");
-		
-		
-		Edge AB = grafo.addEdge("AB", A, B);
-		assertEquals(AB,grafo.getEdge("AB"));
-		
-		
-	}
-	
-	@Test(expected =  IdAlreadyInUseException.class)
+	@Test(expected =  IndexOutOfBoundsException.class)
 	public void addedge_test_I4() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
-		grafo.addEdge("AB", A, B);
-		grafo.addEdge("AB", A, B);
-		
+		assertEquals(2,grafo.getNodeCount());
+		int max = grafo.getNodeCount()+1;
+		grafo.addEdge("AB", A.getIndex(), max);
 		
 	}
 	
-	@Test//(expected=EdgeRejectedException.class)
+	@Test
+	public void addege_test_V3() {
+		
+		
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		
+		Edge AB = grafo.addEdge("AB", "A", "B");
+		assertEquals(AB,grafo.getEdge("AB"));
+	}
+	
+	@Test
+	public void addege_test_V4() {
+		
+		
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		
+		Edge AB = grafo.addEdge("AB", "A", "B");
+		assertEquals(AB,grafo.getEdge("AB"));
+	}
+	
+	@Test
+	public void addege_test_V5() {
+		
+		
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		
+		Edge AB = grafo.addEdge("AB", "A", "B");
+		assertEquals(AB,grafo.getEdge("AB"));
+	}
+	
+	@Test(expected=AssertionError.class)
 	public void addege_test_I5() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
-		grafo.addEdge("AB", A, B);
-		grafo.addEdge("_AB", A, B);
-		assertEquals(2,grafo.getEdgeCount());
+		grafo.addEdge(null, "A", "B");
+		
 	}
 	
-	@Test//(expected=EdgeRejectedException.class)
+	@Test(expected=ElementNotFoundException.class)
 	public void addege_test_I6() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
-		grafo.addEdge("AB", A, B);
-		grafo.addEdge("_AB", B, A);
-		assertEquals(2,grafo.getEdgeCount());
+		grafo.addEdge("AB", null, "B");
+		
 	}
 	
-	@Test
-	public void addege_test_V7() {
-		
-		
-		Node A = grafo.addNode("A");
-		Node B = grafo.addNode("B");
-		
-		Edge AB = grafo.addEdge("AB", "A", "B");
-		assertEquals(AB,grafo.getEdge("AB"));
-	}
-	
-	@Test
-	public void addege_test_V8() {
-		
-		
-		Node A = grafo.addNode("A");
-		Node B = grafo.addNode("B");
-		
-		Edge AB = grafo.addEdge("AB", "A", "B");
-		assertEquals(AB,grafo.getEdge("AB"));
-	}
-	
-	@Test
-	public void addege_test_V9() {
-		
-		
-		 grafo.addNode("A");
-		 grafo.addNode("B");
-		
-		Edge AB = grafo.addEdge("AB", "A", "B");
-		assertEquals(AB,grafo.getEdge("AB"));
-	}
-	
-	@Test(expected=IdAlreadyInUseException.class)
+	@Test(expected=ElementNotFoundException.class)
 	public void addege_test_I7() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
-		grafo.addEdge("AB", "A", "B");
-		grafo.addEdge("AB", "A", "B");
+		grafo.addEdge("AB", "A", null);
+		
 	}
 	
-	@Test//(expected=EdgeRejectedException.class)
+	@Test
+	public void addege_test_V6() {
+		
+		
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		
+		Edge AB = grafo.addEdge("AB", A, B);
+		assertEquals(AB,grafo.getEdge("AB"));
+	}
+	
+	@Test(expected=AssertionError.class)
 	public void addege_test_I8() {
 		
-		grafo.addNode("A");
-		grafo.addNode("B");
-		grafo.addEdge("AB", "A", "B");
-		grafo.addEdge("_AB", "A", "B");
-		assertEquals(2,grafo.getEdgeCount());
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		grafo.addEdge(null, A, B);
 		
 	}
 	
-	@Test//(expected=EdgeRejectedException.class)
+	@Test(expected=NullPointerException.class)
 	public void addege_test_I9() {
 		
-		grafo.addNode("A");
-		grafo.addNode("B");
-		grafo.addEdge("AB", "A", "B");
-		grafo.addEdge("_AB", "B", "A");
-		assertEquals(2,grafo.getEdgeCount());
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		grafo.addEdge("AB", null, B);
 		
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void addege_test_I10() {
+		
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		grafo.addEdge("AB", A, null);
 		
 	}
 	
@@ -254,14 +210,19 @@ public Graph grafo = new MultiGraph("Teste");
 		
 		
 	}
-	
 	@Test(expected =  IndexOutOfBoundsException.class)
 	public void removenode_test_I1() {
 		
 		grafo.addNode("A");
-		grafo.removeNode(2);
+		grafo.removeNode(-1);
 		}
 	
+	@Test(expected =  IndexOutOfBoundsException.class)
+	public void removenode_test_I2() {
+		
+		grafo.addNode("A");
+		grafo.removeNode(grafo.getNodeCount()+1);
+		}
 	
 	@Test
 	public void removenode_test_V2() {
@@ -275,33 +236,12 @@ public Graph grafo = new MultiGraph("Teste");
 	}
 	
 	@Test(expected =  ElementNotFoundException.class)
-	public void removenode_test_I2() {
+	public void removenode_test_I3() {
+		String d = null;
 		
-		
-		grafo.removeNode("A");
+		grafo.removeNode(d);
 		
 		}
-	
-	@Test
-	public void removenode_test_V3() {
-		
-		Node A = grafo.addNode("A");
-		Node _A = grafo.removeNode(A);
-		assertEquals(A,_A);
-		assertEquals(0,grafo.getNodeCount());
-	
-		
-		
-	}
-	
-	//@Test(expected = ArrayIndexOutOfBoundsException.class)
-	public void removenode_test_I3() {
-		
-		Node A = grafo.addNode("A");
-		grafo.removeNode(A);
-		grafo.removeNode(A);
-		
-	}
 	
 	@Test
 	public void removeedge_test_V1() {
@@ -318,16 +258,15 @@ public Graph grafo = new MultiGraph("Teste");
 		
 	}
 	
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
+	@Test(expected = AssertionError.class)
 	public void removeedge_test_I1() {
 		
 		grafo.setStrict(true);
 		grafo.addNode("A");
 		grafo.addNode("B");
 		
-		Edge AB = grafo.addEdge("AB", "A", "B");
-		grafo.removeEdge(AB);
-		grafo.removeEdge(AB);
+		Edge AB = grafo.addEdge(null, "A", "B");
+		
 		}
 	
 	
@@ -353,7 +292,17 @@ public Graph grafo = new MultiGraph("Teste");
 		grafo.addNode("B");
 		
 		grafo.addEdge("AB", "A", "B");
-		grafo.removeEdge(2);
+		grafo.removeEdge(-1);
+		}
+	
+	@Test(expected =  IndexOutOfBoundsException.class)	
+	public void removeedge_test_I3() {
+		
+		grafo.addNode("A");
+		grafo.addNode("B");
+		
+		grafo.addEdge("AB", "A", "B");
+		grafo.removeEdge(grafo.getEdgeCount()+1);
 		}
 	
 	@Test
@@ -372,25 +321,16 @@ public Graph grafo = new MultiGraph("Teste");
 	}
 	
 	@Test	
-	public void removeedge_test_I3() {
+	public void removeedge_test_I4() {
 		
 		grafo.setStrict(false);
 		grafo.addNode("A");
 		grafo.addNode("B");
 		
-		
-		assertNull(grafo.removeEdge("AB"));
+		String ab = null;
+		assertNull(grafo.removeEdge(ab));
 		}
 	
-	@Test(expected=ElementNotFoundException.class)
-	public void removeedge_test_I3_1() {
-		
-		grafo.addNode("A");
-		grafo.addNode("B");
-		
-		
-		grafo.removeEdge("AB");
-		}
 	
 	@Test
 	public void removeedge_test_V4() {
@@ -405,29 +345,32 @@ public Graph grafo = new MultiGraph("Teste");
 		assertEquals(0,grafo.getEdgeCount());
 	}
 	
-	@Test(expected=ElementNotFoundException.class)
-	public void removeedge_test_I4() {
-		
-		Node A = grafo.addNode("A");
-		Node B = grafo.addNode("B");
-		Node C = grafo.addNode("C");
-		Edge AB = grafo.addEdge("AB", "A", "B");
-		Edge _AB = grafo.removeEdge(A,C);
-		
-		
-	}
-	
-	@Test(expected=ElementNotFoundException.class)
+	@Test(expected=NullPointerException.class)
 	public void removeedge_test_I5() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
 		Node C = grafo.addNode("C");
 		Edge AB = grafo.addEdge("AB", "A", "B");
-		Edge _AB = grafo.removeEdge(C,B);
+		Node a = null;
+		Edge _AB = grafo.removeEdge(a,B);
 		
 		
 	}
+	
+	@Test(expected=NullPointerException.class)
+	public void removeedge_test_I6() {
+		
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		Node C = grafo.addNode("C");
+		Edge AB = grafo.addEdge("AB", "A", "B");
+		Node b = null;
+		Edge _AB = grafo.removeEdge(A,b);
+		
+		
+	}
+	
 	
 	@Test
 	public void removeedge_test_V5() {
@@ -443,23 +386,43 @@ public Graph grafo = new MultiGraph("Teste");
 	}
 	
 	@Test(expected =  IndexOutOfBoundsException.class)	
-	public void removeedge_test_I6() {
-		
-		Node A = grafo.addNode("A");
-		Node B = grafo.addNode("B");
-		
-		grafo.addEdge("AB", "A", "B");
-		grafo.removeEdge(25,B.getIndex());
-		}
-	
-	@Test(expected =  IndexOutOfBoundsException.class)	
 	public void removeedge_test_I7() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
 		
 		grafo.addEdge("AB", "A", "B");
-		grafo.removeEdge(A.getIndex(),4);
+		grafo.removeEdge(-1,B.getIndex());
+		}
+	
+	@Test(expected =  IndexOutOfBoundsException.class)	
+	public void removeedge_test_I8() {
+		
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		
+		grafo.addEdge("AB", "A", "B");
+		grafo.removeEdge(grafo.getNodeCount()+1,B.getIndex());
+		}
+	
+	@Test(expected =  IndexOutOfBoundsException.class)	
+	public void removeedge_test_I9() {
+		
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		
+		grafo.addEdge("AB", "A", "B");
+		grafo.removeEdge(A.getIndex(),-1);
+		}
+	
+	@Test(expected =  IndexOutOfBoundsException.class)	
+	public void removeedge_test_I10() {
+		
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		
+		grafo.addEdge("AB", "A", "B");
+		grafo.removeEdge(A.getIndex(),grafo.getNodeCount()+1);
 		}
 	
 	@Test
@@ -476,25 +439,25 @@ public Graph grafo = new MultiGraph("Teste");
 	}
 	
 	@Test(expected=ElementNotFoundException.class)
-	public void removeedge_test_I8() {
+	public void removeedge_test_I11() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
 		
-		
-		Edge _AB = grafo.removeEdge("C","B");
+		String a = null;
+		Edge _AB = grafo.removeEdge(a,"B");
 		
 		
 	}
 	
 	@Test(expected=ElementNotFoundException.class)
-	public void removeedge_test_I9() {
+	public void removeedge_test_I12() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
 		
-		
-		Edge _AB = grafo.removeEdge("A","C");
+		String b = null;
+		Edge _AB = grafo.removeEdge("A",b);
 		
 		
 	}
@@ -514,7 +477,17 @@ public Graph grafo = new MultiGraph("Teste");
 		
 		Node A = grafo.addNode("A");
 		
-		Node _A = grafo.getNode(A.getIndex()+25);
+		grafo.getNode(-1);
+		
+		
+	}
+	
+	@Test(expected =  IndexOutOfBoundsException.class)	
+	public void getnode_test_I2() {
+		
+		Node A = grafo.addNode("A");
+		
+		grafo.getNode(grafo.getNodeCount()+1);
 		
 		
 	}
@@ -530,11 +503,11 @@ public Graph grafo = new MultiGraph("Teste");
 	}
 	
 		
-	public void getnode_test_I2() {
+	public void getnode_test_I3() {
 		
 		Node A = grafo.addNode("A");
-		
-		assertNull(grafo.getNode("B"));
+		String a = null;
+		assertNull(grafo.getNode(a));
 		
 		
 	}
@@ -559,7 +532,19 @@ public Graph grafo = new MultiGraph("Teste");
 		Node B = grafo.addNode("B");
 		
 		Edge AB = grafo.addEdge("AB", "A", "B");
-		grafo.getEdge(AB.getIndex()+25);
+		grafo.getEdge(-1);
+		
+		
+	}
+	
+	@Test(expected =  IndexOutOfBoundsException.class)	
+	public void getedge_test_I2() {
+		
+		Node A = grafo.addNode("A");
+		Node B = grafo.addNode("B");
+		
+		Edge AB = grafo.addEdge("AB", "A", "B");
+		grafo.getEdge(grafo.getEdgeCount()+1);
 		
 		
 	}
@@ -578,13 +563,14 @@ public Graph grafo = new MultiGraph("Teste");
 	}
 	
 	@Test
-	public void getedge_test_I2() {
+	public void getedge_test_I3() {
 		
 		Node A = grafo.addNode("A");
 		Node B = grafo.addNode("B");
 		
 		Edge AB = grafo.addEdge("AB", "A", "B");
-		assertNull(grafo.getEdge("AC"));
+		String ab = null;
+		assertNull(grafo.getEdge(ab));
 		
 		
 	}
@@ -594,6 +580,17 @@ public Graph grafo = new MultiGraph("Teste");
 		
 		
 		grafo.setAttribute("teste", "teste"	);
+		assertEquals(grafo.getAttributeCount(),1);
+		
+		
+		
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void setattribure_test_I1() {
+		
+		
+		grafo.setAttribute(null, "teste"	);
 		assertEquals(grafo.getAttributeCount(),1);
 		
 		
@@ -618,9 +615,10 @@ public Graph grafo = new MultiGraph("Teste");
 		
 		grafo.setAttribute("teste", "teste"	);
 		
-		assertEquals(null,grafo.getAttribute("teste1"));
+		assertEquals(null,grafo.getAttribute(null));
 		
 	}
+	
 	
 	@Test
 	public void removeattribure_test_v1() {
@@ -639,7 +637,7 @@ public Graph grafo = new MultiGraph("Teste");
 		
 		
 		grafo.setAttribute("teste", "teste"	);
-		grafo.removeAttribute("teste1");
+		grafo.removeAttribute(null);
 		
 		assertEquals(1,grafo.getAttributeCount());
 		

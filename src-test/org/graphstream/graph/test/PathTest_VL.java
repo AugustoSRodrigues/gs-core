@@ -11,7 +11,7 @@ import org.junit.Test;
 
 
 
-public class PathTest_CE {
+public class PathTest_VL {
 	
 	public Graph grafo = new DefaultGraph("Teste"); 
 	public Path path = new Path();
@@ -46,6 +46,7 @@ public class PathTest_CE {
 		
 		assertNull(path.getRoot());
 		}
+	
 	
 	@Test
 	public void add_node_test_V1() {
@@ -95,6 +96,8 @@ public class PathTest_CE {
 	public void add_node_test_I1() {
 		path.add(null, null);
 	}
+	
+	
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void add_node_test_I2() {
